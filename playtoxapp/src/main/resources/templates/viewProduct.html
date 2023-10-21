@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Просмотр товара</title>
+<link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet" />
+</head>
+<body>
+<a sec:authorize="isAuthenticated()" th:href="@{/changeRole}">Сменить права доступа</a>
+<form sec:authorize="isAuthenticated()" method="POST" th:action="@{/auth/logout}">
+	<input type="submit" value="Выйти"/>
+</form>
+
+    <form sec:authorize="!isAuthenticated()" name="f" th:action="@{/auth/login}" method="post">
+        <fieldset>
+            <legend>Войдите</legend>
+            <div th:if="${param.error}" class="alert alert-error">
+                Неправильные имя или пароль
+            </div>
+            <div th:if="${param.logout}" class="alert alert-success">
+                Вы вышли
+            </div>
+            <label for="username">Имя</label>
+            <input type="text" id="username" name="username"/>
+            <label for="password">Пароль</label>
+            <input type="password" id="password" name="password"/>
+            <div class="form-actions">
+                <button type="submit" class="btn">Войти</button>
+                <a th:href="@{/auth/registration}">Регистрация</a>
+            </div>
+        </fieldset>
+    </form>
+	<center>
+
+		<div id="contentdiv" >
+				<div id="headerdiv">
+		</div>
+		<div>
+	<h1><a th:href="@{/products}">Товары</a></h1><br>
+	
+
+</div>
+<div th:object="${product}">
+	<h3 th:text="*{name}"></h3><br>
+	<h5 th:text="|Цена: *{price}руб.|"></h5>
+	<h5 th:text="|Остаток: *{stock}|"></h5>
+	<span th:text="*{description}"></span><br><br>
+	<form sec:authorize="isAuthenticated()" th:method="POST" th:action="@{/products/{id}/buy(id=${product.id})}" th:object="${purchase}">
+		<span th:text="${purchase.product}"></span>
+		<span th:if="${#fields.hasErrors('global')}">Вы выбрали больше, чем есть в наличии</span>
+		<!--<input type="hidden" th:field="*{product}" th:value="${productOfPurchase}"/>-->
+		<input type="number" placeholder="Кол-во для покупки" value="Количество" th:field="*{count}"/>
+		<input type="submit" value="Купить"/>
+		</form>
+	<br><br><br>
+	<a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/products/{id}/edit(id=*{id})}">Изменить</a>
+	
+	
+	</div>
+
+		</div>
+		<div id="prefooter"></div>
+		</div>
+<div id="footerdiv"></div>
+</center>
+</body>
+</html>

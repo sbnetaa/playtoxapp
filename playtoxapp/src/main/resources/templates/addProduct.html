@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Добавление товара</title>
+<link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet" />
+</head>
+<body>
+	<center>
+
+		<div id="contentdiv" >
+				<div id="headerdiv">
+		</div>
+		<div style="margin: 40px;">
+	<a th:href="@{/products}">Товары</a><br>
+	
+
+</div>
+<a sec:authorize="isAuthenticated()" th:href="@{/auth/logout}">Выйти</a>
+<div><form th:method="POST" th:action="@{/admin/addProduct}" th:object="${product}" enctype="multipart/form-data">
+	<p th:each="error: ${#fields.errors('name')}" 
+         font-color="red" th:text="'Название не должно быть пустым'">Название не должно быть пустым</p>
+	Название: <input type="text" th:field="*{name}"/><br><br>
+	
+	Добавьте до 5-и изображений:<br>
+	1: <input type="file" th:field="*{pictures[0]}"/><br>
+	2: <input type="file" th:field="*{pictures[1]}"/><br>
+	3: <input type="file" th:field="*{pictures[2]}"/><br>
+	4: <input type="file" th:field="*{pictures[3]}"/><br>
+	5: <input type="file" th:field="*{pictures[4]}"/><br>
+	<br>
+	Цена: <input type="number" th:field="*{price}"/> руб.<br>
+	Остаток: <input type="number" th:field="*{stock}"/><br>
+	Описание: <input type="text" class="desc" th:field="*{description}"/><br>
+	
+	<input type="submit" value="Готово"/>
+	</form>
+
+		</div>
+		<div id="prefooter"></div>
+		</div>
+<div id="footerdiv"></div>
+</center>
+</body>
+</html>

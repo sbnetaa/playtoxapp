@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Товары</title>
+<link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet" />
+</head>
+<body>
+
+	<center>
+
+		<div id="contentdiv" >
+				<div id="headerdiv">
+		</div>
+		<div><form method="POST" th:action="@{/changeRole}">
+		<input type="checkbox" name="role" id="role"/>
+		<label for="role" th:value="true"><h5>Быть админом</h5></label>
+		<input type="submit" value="Готово"/>
+			</form>
+			<br>(После изменения нужно перелогиниться)
+	<h4><a th:href="@{/products}">Товары</a></h4><br>
+	
+
+</div>
+
+		</div>
+		<div id="prefooter"></div>
+		</div>
+<div id="footerdiv"></div>
+</center>
+</body>
+</html>

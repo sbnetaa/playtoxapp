@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Покупки</title>
+<link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet" />
+</head>
+<body>
+<a sec:authorize="isAuthenticated()" th:href="@{/changeRole}">Сменить права доступа</a>
+<form sec:authorize="isAuthenticated()" method="POST" th:action="@{/auth/logout}">
+	<input type="submit" value="Выйти"/>
+</form>
+
+    <form sec:authorize="!isAuthenticated()" name="f" th:action="@{/auth/login}" method="post">
+        <fieldset>
+            <legend>Войдите</legend>
+            <div th:if="${param.error}" class="alert alert-error">
+                Неправильные имя или пароль
+            </div>
+            <div th:if="${param.logout}" class="alert alert-success">
+                Вы вышли
+            </div>
+            <label for="username">Имя</label>
+            <input type="text" id="username" name="username"/>
+            <label for="password">Пароль</label>
+            <input type="password" id="password" name="password"/>
+            <div class="form-actions">
+                <button type="submit" class="btn">Войти</button>
+                <a th:href="@{/auth/registration}">Регистрация</a>
+            </div>
+        </fieldset>
+    </form>
+	<center>
+
+		<div id="contentdiv" >
+				<div id="headerdiv">
+		</div>
+		<div>
+	<h1><a th:href="@{/products}">Товары</a></h1><br>
+	<h1 sec:authorize="hasRole('ADMIN')"><a th:href="@{/admin/purchases}">Покупки</a></h1><br>
+
+</div>
+
+
+<span th:each="purchase : ${purchases}">
+	<p th:text="|${purchase.date}: ${purchase.owner} приобрел ${purchase.product} в количестве ${purchase.count} ед.|">
+		</p>
+				</span>
+
+	
+	</span>
+
+		</div>
+		<div id="prefooter"></div>
+		</div>
+<div id="footerdiv"></div>
+</center>
+</body>
+</html>
